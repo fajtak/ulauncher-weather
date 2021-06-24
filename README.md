@@ -1,8 +1,8 @@
 # Weather extension for Ulauncher using data from OpenWeatherMap.org
 
-<!-- <p align="center"> -->
-  <!-- <img src="https://raw.githubusercontent.com/molnarmark/ulauncher-subl-projects/master/demo.png?token=ADFGBYPCLSS5LJIPZIK7G4S7SAUVW" /> -->
-<!-- </p> -->
+<p align="center">
+  <img src="images/demo.png"/>
+</p>
 
 With this Ulauncher extension, you can quickly check the recent weather at given city.
 
