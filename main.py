@@ -31,14 +31,9 @@ class KeywordQueryEventListener(EventListener):
 		hum = data_string["main"]["humidity"]
 		wind = data_string["wind"]["speed"]
 		cloud = data_string["clouds"]["all"]
-		#dollar = data_string["bpi"]["USD"]["rate"]
-		# update = data_string['dt']
-		# timestamp = datetime.datetime.fromtimestamp(update)
 
 		items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
 										name='%s: %s, %s %sC' % (city.title(),weather.title(),str(temp),chr(176)),
-										# name='Thoiry: %s' % city,
-										# description='Last Update: %s' % str(timestamp.strftiulame('%Y-%m-%d %H:%M:%S')),
 										description='Pressure: %s Pa, Humidity: %s%%, Wind: %s m/s, Cloudiness: %s%%' % (press,hum,wind,cloud),
 										on_enter=HideWindowAction()))
 

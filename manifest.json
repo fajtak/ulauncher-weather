@@ -1,7 +1,7 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "Check Weather",
-  "description": "Shows the temperature in the chosen city",
+  "name": "Weather",
+  "description": "Shows the current weather in the chosen city (from OpenWeatherMap)",
   "developer_name": "Fajtak",
   "icon": "images/icon.png",
   "options": {
@@ -9,9 +9,9 @@
   },
   "preferences": [
     {
-      "id": "wth_tmp",
+      "id": "wth_keyword",
       "type": "keyword",
-      "name": "Weather Temperature",
+      "name": "OpenWeatherMap",
       "description": "Show temperature at a given city",
       "default_value": "w"
     },
