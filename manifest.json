@@ -1,0 +1,26 @@
+{
+  "required_api_version": "^2.0.0",
+  "name": "Check Weather",
+  "description": "Shows the temperature in the chosen city",
+  "developer_name": "Fajtak",
+  "icon": "images/icon.png",
+  "options": {
+    "query_debounce": 0.1
+  },
+  "preferences": [
+    {
+      "id": "wth_tmp",
+      "type": "keyword",
+      "name": "Weather Temperature",
+      "description": "Show temperature at given city",
+      "default_value": "wth"
+    },
+    {
+      "id": "city1",
+      "type": "text",
+      "name": "City A: ",
+      "description": "Define the city you want to have information about",
+      "default_value": "Pardubice"
+    }
+  ]
+}
