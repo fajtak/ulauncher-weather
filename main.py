@@ -18,10 +18,10 @@ class KeywordQueryEventListener(EventListener):
 
 	def on_event(self, event, extension):
 		items = []
-
+		apikey = extension.preferences["api_key"]
 		city = event.get_argument()
 
-		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=0bb5716aa807576ad02c24541f096076&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apikey + "&units=metric")
 		data_string = r.json()
 
 		weather = data_string["weather"][0]["description"]

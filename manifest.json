@@ -12,15 +12,15 @@
       "id": "wth_tmp",
       "type": "keyword",
       "name": "Weather Temperature",
-      "description": "Show temperature at given city",
-      "default_value": "wth"
+      "description": "Show temperature at a given city",
+      "default_value": "w"
     },
     {
-      "id": "city1",
-      "type": "text",
-      "name": "City A: ",
-      "description": "Define the city you want to have information about",
-      "default_value": "Pardubice"
+      "id": "api_key",
+      "type": "input",
+      "name": "OpenWeatherMap API Key",
+      "description": "Enter your personal API key from OpenWeatherMap.org",
+      "default_value": " "
     }
   ]
 }
