@@ -21,6 +21,13 @@
       "name": "OpenWeatherMap API Key",
       "description": "Enter your personal API key from OpenWeatherMap.org",
       "default_value": " "
+    },
+    {
+      "id": "predef_cities",
+      "type": "text",
+      "name": "Predefined cities",
+      "name": "When no city is entered, the weather in the predefined cities is shown",
+      "default_value": "Prague;Thoiry;Pardubice"
     }
   ]
 }

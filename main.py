@@ -16,11 +16,7 @@ class DemoExtension(Extension):
 
 class KeywordQueryEventListener(EventListener):
 
-	def on_event(self, event, extension):
-		items = []
-		apikey = extension.preferences["api_key"]
-		city = event.get_argument()
-
+	def add_item(self, items, city, apikey):
 		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apikey + "&units=metric")
 		data_string = r.json()
 
@@ -36,6 +32,19 @@ class KeywordQueryEventListener(EventListener):
 										name='%s: %s, %s %sC' % (city.title(),weather.title(),str(temp),chr(176)),
 										description='Pressure: %s Pa, Humidity: %s%%, Wind: %s m/s, Cloudiness: %s%%' % (press,hum,wind,cloud),
 										on_enter=HideWindowAction()))
+
+	def on_event(self, event, extension):
+		items = []
+		apikey = extension.preferences["api_key"]
+		predef_cities = extension.preferences["predef_cities"].split(";")
+
+		city = event.get_argument()
+
+		if (city != None):
+			self.add_item(items,city,apikey)
+		else:
+			for iterCity in predef_cities:
+				self.add_item(items,iterCity,apikey)
 
 		return RenderResultListAction(items)
 
