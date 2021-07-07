@@ -7,6 +7,11 @@ from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
+from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
+
+def gen_url(cityID):
+	base_url = "https://openweathermap.org/city/"
+	return base_url + str(cityID)
 
 class WeatherExtension(Extension):
 
@@ -27,11 +32,12 @@ class KeywordQueryEventListener(EventListener):
 		hum = data_string["main"]["humidity"]
 		wind = data_string["wind"]["speed"]
 		cloud = data_string["clouds"]["all"]
+		cityID = data_string["id"]
 
 		items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
 										name='%s: %s, %s %sC' % (city.title(),weather.title(),str(temp),chr(176)),
 										description='Pressure: %s Pa, Humidity: %s%%, Wind: %s m/s, Cloudiness: %s%%' % (press,hum,wind,cloud),
-										on_enter=HideWindowAction()))
+										on_enter=OpenUrlAction(gen_url(cityID))))
 
 	def add_future_precipitations(self, items, city):
 		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=metric")
@@ -40,6 +46,7 @@ class KeywordQueryEventListener(EventListener):
 		lon = data_string["coord"]["lon"]
 		lat = data_string["coord"]["lat"]
 		icon = data_string["weather"][0]["icon"]
+		cityID = data_string["id"]
 
 		r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + '&exclude=hourly,daily,alerts&appid=' + self.apikey + "&units=metric")
 		data_string = r.json()
@@ -54,7 +61,7 @@ class KeywordQueryEventListener(EventListener):
 			items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
 										name='No rain in the next hour!',
 										description='',
-										on_enter=HideWindowAction()))
+										on_enter=OpenUrlAction(gen_url(cityID))))
 		elif (precip[0]["precipitation"] != 0):
 			rainStopTime = 60
 			for idx, event in enumerate(precip):
@@ -65,12 +72,12 @@ class KeywordQueryEventListener(EventListener):
 				items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
 										name='Raining! It will not end within an hour',
 										description='Expected precipitations in the next hour: %2.1f mm/h' % (total_prec/len(precip)),
-										on_enter=HideWindowAction()))
+										on_enter=OpenUrlAction(gen_url(cityID))))
 			else:
 				items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
 										name='Raining! It should stop in %s minutes' % (rainStopTime),
 										description='Expected precipitations in the next hour: %2.1f mm/h' % (total_prec/len(precip)),
-										on_enter=HideWindowAction()))
+										on_enter=OpenUrlAction(gen_url(cityID))))
 		else:
 			rainStartTime = 0
 			for idx, event in enumerate(precip):
