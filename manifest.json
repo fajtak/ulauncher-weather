@@ -23,6 +23,16 @@
       "default_value": " "
     },
     {
+      "id": "units",
+      "type": "select",
+      "name": "Units",
+      "default_value": "metric",
+      "options": [
+        { "value": "metric", "text": "Metric" },
+        { "value": "imperial", "text": "Imperial" }
+      ]
+    },
+    {
       "id": "predef_cities",
       "type": "text",
       "name": "Predefined cities",

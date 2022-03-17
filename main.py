@@ -22,7 +22,7 @@ class WeatherExtension(Extension):
 class KeywordQueryEventListener(EventListener):
 
 	def add_current_weather(self, items, city):
-		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=" + self.units)
 		data_string = r.json()
 
 		weather = data_string["weather"][0]["description"]
@@ -35,7 +35,7 @@ class KeywordQueryEventListener(EventListener):
 		cityID = data_string["id"]
 
 		items.append(ExtensionResultItem(icon='images/'+icon[0:2]+'d.png',
-										name='%s: %s, %s %sC' % (city.title(),weather.title(),str(temp),chr(176)),
+										name='%s: %s, %s %s' % (city.title(),weather.title(),str(temp),self.temp_symbol),
 										description='Pressure: %s Pa, Humidity: %s%%, Wind: %s m/s, Cloudiness: %s%%' % (press,hum,wind,cloud),
 										on_enter=OpenUrlAction(gen_url(cityID))))
 
@@ -110,7 +110,7 @@ class KeywordQueryEventListener(EventListener):
 										on_enter=OpenUrlAction(gen_url(cityID))))
 
 	def add_future_precipitations(self, items, city):
-		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=" + self.units)
 		data_string = r.json()
 
 		lon = data_string["coord"]["lon"]
@@ -118,7 +118,7 @@ class KeywordQueryEventListener(EventListener):
 		icon = data_string["weather"][0]["icon"]
 		cityID = data_string["id"]
 
-		r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + '&exclude=current,daily,alerts&appid=' + self.apikey + "&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + '&exclude=current,daily,alerts&appid=' + self.apikey + "&units=" + self.units)
 		data_string = r.json()
 		# recent_time = data_string["current"]["dt"]
 		precip = data_string["minutely"]
@@ -127,7 +127,7 @@ class KeywordQueryEventListener(EventListener):
 		self.precip_in_12hours(items,hourly,icon,cityID)
 
 	def add_3day_forecast(self, items, city):
-		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + self.apikey + "&units=" + self.units)
 		data_string = r.json()
 
 		lon = data_string["coord"]["lon"]
@@ -135,7 +135,7 @@ class KeywordQueryEventListener(EventListener):
 		icon = data_string["weather"][0]["icon"]
 		cityID = data_string["id"]
 
-		r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + '&exclude=current,minutely,hourly,alerts&appid=' + self.apikey + "&units=metric")
+		r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + '&exclude=current,minutely,hourly,alerts&appid=' + self.apikey + "&units=" + self.units)
 		data_string = r.json()
 		# recent_time = data_string["current"]["dt"]
 		daily = data_string["daily"]
@@ -146,18 +146,20 @@ class KeywordQueryEventListener(EventListener):
 			if "rain" in daily[day]:
 				items.append(ExtensionResultItem(icon='images/'+daily[day]["weather"][0]["icon"][0:2]+'d.png',
 										name='%s, %s %s - %s:' % (str(time.strftime("%a")),str(time.strftime("%d")),str(time.strftime("%b")),daily[day]["weather"][0]["description"]),
-										description='%2.0f / %2.0f %sC, %2.1f mm/day' % (daily[day]["temp"]["max"],daily[day]["temp"]["min"],chr(176),daily[day]["rain"]),
+										description='%2.0f / %2.0f %s, %2.1f mm/day' % (daily[day]["temp"]["max"],daily[day]["temp"]["min"],self.temp_symbol,daily[day]["rain"]),
 										on_enter=OpenUrlAction(gen_url(cityID))))
 			else:
 				items.append(ExtensionResultItem(icon='images/'+daily[day]["weather"][0]["icon"][0:2]+'d.png',
-										name='%s, %s %s - %s' % (str(time.strftime("%a")),str(time.strftime("%d")),str(time.strftime("%b")),daily[day]["weather"][0]["description"]),
-										description='%2.0f / %2.0f %sC' % (daily[day]["temp"]["max"],daily[day]["temp"]["min"],chr(176)),
+										name='%s,f %s %s - %s' % (str(time.strftime("%a")),str(time.strftime("%d")),str(time.strftime("%b")),daily[day]["weather"][0]["description"]),
+										description='%2.0f / %2.0f %s' % (daily[day]["temp"]["max"],daily[day]["temp"]["min"],self.temp_symbol),
 										on_enter=OpenUrlAction(gen_url(cityID))))
 
 
 	def on_event(self, event, extension):
 		items = []
 		self.apikey = extension.preferences["api_key"]
+		self.units = extension.preferences["units"]
+		self.temp_symbol = f'{chr(176)}C' if self.units == 'metric' else f'{chr(176)}F'
 		predef_cities = extension.preferences["predef_cities"].split(";")
 
 		city = event.get_argument()
