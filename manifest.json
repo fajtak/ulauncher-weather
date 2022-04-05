@@ -38,6 +38,13 @@
       "name": "Predefined cities",
       "name": "When no city is entered, the weather in the predefined cities is shown",
       "default_value": "Prague;Thoiry;Pardubice"
+    },
+    {
+      "id": "language",
+      "type": "text",
+      "name": "Language",
+      "name": "Language (https://openweathermap.org/current#multi)",
+      "default_value": "en"
     }
   ]
 }

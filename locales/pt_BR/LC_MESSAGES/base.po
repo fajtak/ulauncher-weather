@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-04-04 22:42+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: main.py:43
+msgid "Pressure: %s Pa), (Humidity: %s%%), (Wind: %s m/s), (Cloudiness): %s%%"
+msgstr "Pressão: %s Pa), (Humidade: %s%%), (Vento: %s m/s), (Nebulosidade): %s%%"
+
+#: main.py:53
+msgid "No rain in the next hour!"
+msgstr "Sem chuva na próxima hora"
+
+#: main.py:64
+msgid "Raining! It will not end within an hour"
+msgstr "Chovendo! Não vai parar em uma hora"
+
+#: main.py:65 main.py:70 main.py:80
+msgid "Expected precipitations in the next hour: %2.1f mm/h"
+msgstr "Precipitação esperada na próxima hora: %2.1f mm/h"
+
+#: main.py:69
+msgid "Raining! It should stop in %s minutes"
+msgstr "Chovendo! Deve parar em %s minutos"
+
+#: main.py:79
+msgid "It should start raining in %s minutes"
+msgstr "Deve começar a chover nos proximos %s minutos"
+
+#: main.py:107
+msgid "No rain in the next 12 hours!"
+msgstr "Sem chuva nas próximas horas!"
